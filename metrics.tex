@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{lipsum}
+
+\begin{document}
+
+\section{Questions}
+
+\begin{itemize}
+  \item Should it output a list or a phrase?
+  \item Only ask actionExists questions if object or verb is in video?
+  \item Should we output indirect references? 
+  \begin{itemize}
+      \item Ex: "Which did they start first, the action they did the longest or smiling?" 
+      \item Current: holding a blanket
+      \item Option:  the action they did the longest
+      \item It's a non-trivial fix, and expands our answer space a lot 
+  \end{itemize}
+\end{itemize}
+
+
+\section{What's left with templates}
+\begin{itemize}
+    \item Combining  verbs like “putting something on a table” and “putting a cup somewhere” so not separate if referring to same action
+    \item fix grammar and add more grammar capabilities
+    \item add more natural language examples for each question
+    \item add more indirect references
+    \item add more templates (choose/verify, and, xor, or, etc)
+    \item balancing for all variables (and test balancing values)
+    \item add in code necessary for dividing test set into different groups
+    \item better explanations (and subprocesses like "I want to know about x")?
+    \item be able to make all of the videos
+\end{itemize}
+
+\section{Metrics}
+\setlength\LTleft{-1in}
+\setlength\LTright{-1in}
+
+\begin{longtable}[]{|p{2cm}|p{4cm}|p{10cm}|}
+    %\begin{center}
+    \caption{Suite of Metrics}
+    \label{tab:table1}
+    %\noindent\makebox[\textwidth]{
+    %\begin{tabular}{|p{3cm}|p{4cm}|p{10cm}|}
+        \hline
+        \textbf{Title} & \textbf{Formalized} & \textbf{Description}\\
+        \hline
+        \multicolumn{3}{|c|}{\textbf{Video Length}}\\
+        \hline
+        Video Length & Accuracy of $\hat{A}$ on videos of length $>$ X seconds & Trains on short videos and judges on long videos \textbf{Also train on videos with small number of actions and test on a larger number of actions? } \\
+        \hline
+        \multicolumn{3}{|c|}{\textbf{Content Type}}\\
+        \hline
+        Global Variables & Accuracy for each global category & Split into larger categories (count, length, sequence, first etc)\\
+        \hline
+        \multicolumn{3}{|c|}{\textbf{Answer Type}}\\
+        \hline
+        Chance Accuracy & Accuracy of binary questions and Accuracy of open questions & Split into binary and open questions\\
+        \hline
+        Question Type & Accuracy for each question structure  & Choose, verify, logical, open, etc\\
+        \hline
+        \multicolumn{3}{|c|}{\textbf{Lists}}\\
+        \hline
+        Length & Percent $\hat{a} \in \hat{A}$ where $|\hat{a}| = |a|$ \textbf{Unless should be by how far off it is?} & Check correct length\\
+        \hline 
+        Similarity & \textbf{How to measure? Levenshtein distance?} & Is the list missing information, containing extra information, and/or containing incorrect information? \\
+        \hline
+        Ordering & \textbf{(Same question as above)} & For ordered lists, are they just out of order? If only looked at without ordering would the accuracy increase? \\
+        \hline
+        \multicolumn{3}{|c|}{\textbf{Superlatives}}\\
+        \hline
+        Superlative Closeness & For all $q$ in first/last category, percent in which $\hat{a} = a$ or $\hat{a}$ is within relevant frames but is not first/last & item given as "first" or "last" still occurred, just wasn't first or last \\
+        \hline
+        \multicolumn{3}{|c|}{\textbf{Compositionality}}\\
+        \hline
+        \% Training Data & The accuracy of $\hat{A}$ when trained on X\% of data &
+        \% of distinct examples (the total num is constant)\\
+        && \textbf{So: I think this is by the number of templates? It's worth testing, but im concerned will be a lot harder than Lake's}  \\
+        \hline
+        Number Compositional Steps & Accuracy on questions with $\geq$ X steps & Train on $<$ X steps, Test on $\geq$ X step. \textbf{Should be high enough to include all templates?}\\
+        \hline
+        Novel Compositions & Accuracy on $Q$ where $\forall q \in Q, q$ has an unseen composition& Leave out certain compositions of the below with obj/rel/action and then test\\
+        && First and Last\\
+        && xor/and and other logical operations \\
+        && question structures (choose, verify)\\
+        && multi-level indirect (train on "action they did the longest" and "before running". Test on "before the action they did the longest")\\
+        && before and after \\
+        && more and fewer \\
+        && longer and shorter
+        &&\\
+        && \textbf{Note: Lake et al only did 2, because the others were distributionally identical.}\\
+        && \textbf{They only saw a basic action (JUMP)}\\
+        \hline
+        Indirect Refs & For all questions i with only direct references, $I_i$ is the same question with all indirect tag combinations. Of $(q, a) \in I_i$, measure the percent of $\hat{a} = a$ & Start with all direct refs, and see if it gets it wrong by replacing with any. \textbf{What would the final number be? Should it be by number of indirect refs, or type?}\\
+        \hline
+        Time Localization & Accuracy on $\hat{a}$ for all $q \in T_i$ where $i \in \{0, 1, 2\}$ and $T_i$ has $i$ temporal localization steps & No localization, One step (before, after, while), Two steps localization (between)\\
+        \hline
+        \multicolumn{3}{|c|}{\textbf{Answer Legitimacy}}\\
+        \hline
+        \multirow{1}{*}{Consistent} & $\forall(q, a)$, $E_q = (q_1, a_1),$ $(q_2, a_2), \dots, (q_n, a_n)$ & Answers that are necessarily entailed are correct   \\
+        &&\\
+        & Score is the Accuracy of $E_q$ for every $(q, a) \in Q$ ($Q$ = questions answered correctly) averaged across $|Q|$& \\
+        &&\\
+        &\textbf{Would it be helpful to do for incorrect answers too to see where just misidentifying?}& \\
+        && x before y $\rightarrow$ y after x \\
+        && x longer than y $\rightarrow$ y shorter than x\\
+        && x more times than y $\rightarrow$ y fewer times than x\\
+        && "No" $\rightarrow$ All AND questions "No"\\
+        && x AND y = "Yes" $\rightarrow$ x = "Yes", y = "Yes"\\
+        && first is x = "Yes" $\rightarrow$ first is y = "No", and first is x for any temporal localization "before"\\
+        && last is x = "Yes" $\rightarrow$ last is y = "No", and last is x for any temporal localization "after"\\
+        && \textbf{TODO: entailments with sequences and lists?}\\
+        \hline
+        Validity & For $a \in \{$given answers$\}$, $a \in V_q$ where $ V_q = $ set of all possible answers in correct genre & Answer type is of correct genre\\
+        && Yes/No \\
+        && Number \\
+        && Before/after \\
+        && Object \\
+        && Relationship \\
+        && Action \\
+        && List\\
+        \hline
+        Plausibility & For $a \in \{$given answers$\}$, $a \in P_q$ where $ P_q = $ set of all answers in answer distribution & Answer within distribution of possible answers\\
+        \hline
+        Predicted vs Actual Dist &  $\chi^2$ difference between $\hat{A_i}$ and $A_i$ where $A_i$ is the answer distribution for question type $i$. & How close tested answer distribution is from true answer distribution (\textbf{per general type or per exact template?)}\\
+        \hline
+        Attention Grounding & & Model paying attention to right set of frames \textbf{and right spatial location?} \\
+        \hline
+        
+    %\end{tabular}
+    %}
+    %\end{center}
+\end{longtable}
+
+
+\end{document}
+

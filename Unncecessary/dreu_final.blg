@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2020)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: dreu_final.aux
+The style file: ieee_fullname.bst
+Database file #1: dreu_final.bib
+You've used 32 entries,
+            2120 wiz_defined-function locations,
+            653 strings with 10438 characters,
+and the built_in function-call counts, 17145 in all, are:
+= -- 1695
+> -- 870
+< -- 28
++ -- 343
+- -- 310
+* -- 1179
+:= -- 2515
+add.period$ -- 98
+call.type$ -- 32
+change.case$ -- 250
+chr.to.int$ -- 0
+cite$ -- 32
+duplicate$ -- 705
+empty$ -- 1263
+format.name$ -- 310
+if$ -- 3789
+int.to.chr$ -- 0
+int.to.str$ -- 32
+missing$ -- 32
+newline$ -- 163
+num.names$ -- 64
+pop$ -- 320
+preamble$ -- 1
+purify$ -- 218
+quote$ -- 0
+skip$ -- 629
+stack$ -- 0
+substring$ -- 1237
+swap$ -- 338
+text.length$ -- 28
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 128
+warning$ -- 0
+while$ -- 147
+width$ -- 34
+write$ -- 355
