@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{lipsum}
+
+\begin{document}
+
+\begin{table}[]
+    \begin{center}
+    \caption{Metrics Priority List}
+    \label{tab:table1}
+    \begin{tabular}{|p{2cm}|p{10cm}|p{.8cm}|p{.5cm}|}
+     \hline
+     \multicolumn{4}{|c|}{\textbf{First Round}}\\
+    \hline
+    All & Accuracy on all questions & Easy & X \\
+    \hline
+    Question Type & Accuracy on each question category (e.g. Counting, Length, First, ...) & Easy & X \\
+    \hline
+    Answer Type & Accuracy on each answer category (e.g. binary, and open) & Easy & X \\
+    \hline
+    Video length & train on videos of length $<$ 30 seconds. Test on videos of length $\geq$ 30 seconds & Easy &  \\
+    \hline
+    Compositional Steps &  train on questions with $<$ 6 steps. Test on questions with $\geq$ 6 steps & Easy & X  \\
+    \hline
+    Novel Compositions & See Table 2 & Hard  & \\
+    \hline
+    Indirect ref Consistency & Accuracy on questions referring to the same ideas but using different numbers of indirect references & Hard  & \\
+    \hline
+    Direct refs only & Questions with no indirect refs & Med & \\
+    \hline
+    
+    
+     \multicolumn{4}{|c|}{\textbf{Second Round}}\\
+    \hline
+    Actions & train on videos with $<$ 5 actions. Test on videos with $\geq$ 5 actions & Med  &  \\
+    \hline
+    Consistent & If answers a question correctly, answers all logical entailments correctly & Hard &  \\
+    \hline
+    Validity & Answer type is of correct genre (e.g. object, relation, action, count, yes/no) & Med & \\
+    \hline
+    Plausibility  & Answer exists in distribution for that question & Med & \\
+    \hline
+     Temporal localization & find pairs of questions where changing temporal localization changes the answer. See how many pairs both are correct for. & Hard  & \\
+     \hline
+    
+    
+     \multicolumn{4}{|c|}{\textbf{Third Round}}\\
+    \hline
+    Sequencing & Something where sequencing is consistent & ?  & \\
+    \hline
+    \% training data & train on only 1, 5, 10 and 20 percent of training data  & Easy & \\
+    \hline
+    Distribution & Predicted answers follow same distribution as ground truth & Med & \\
+    \hline
+    \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{longtable}[]{|p{2cm}|p{10cm}|p{.5cm}|}
+    %\begin{center}
+    \caption{Novel Composition}
+    \label{tab:table1}
+    \hline
+    \textbf{Name} & \textbf{Absent from training} & Done \\
+    \hline
+    object-relationship & touching table (10,087), touching food (36,471), beneath table (1,583), beneath food (2,346) &X  \\
+    \hline
+    repetition & taking a dish from somewhere (1: 344, 2: 8, 3: 5), putting some food somewhere (1: 452, 2: 17, 3: 3) & X \\
+    \hline
+    first/last & looking at first, behind first, holding first & X \\
+    \hline
+    before/after & before standing up (1341), before playing with phone (673), before throwing broom (25) & X \\
+    \hline
+    longer & before standing up (1341), before playing with phone (673), before throwing broom (25) &  X\\
+    \hline
+    
+    %\end{tabular}
+    %}
+    %\end{center}
+\end{longtable}
+
+\end{document}
