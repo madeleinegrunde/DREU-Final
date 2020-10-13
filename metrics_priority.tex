@@ -19,15 +19,15 @@
     \hline
     Answer Type & Accuracy on each answer category (e.g. binary, and open) & Easy & X \\
     \hline
-    Video length & train on videos of length $<$ 30 seconds. Test on videos of length $\geq$ 30 seconds & Easy &  \\
+    Video length & train on videos of length $<$ 30 seconds. Test on videos of length $\geq$ 30 seconds & Easy &  X \\
     \hline
-    Compositional Steps &  train on questions with $<$ 6 steps. Test on questions with $\geq$ 6 steps & Easy & X  \\
+    Compositional Steps &  train on questions with $<$ 6 steps. Test on questions with $\geq$ 6 steps & Easy & X \\
     \hline
-    Novel Compositions & See Table 2 & Hard  & \\
+    Novel Compositions & See Table 2 & Hard  & X \\
     \hline
-    Indirect ref Consistency & Accuracy on questions referring to the same ideas but using different numbers of indirect references & Hard  & \\
+    Indirect ref Consistency & Accuracy on questions referring to the same ideas but using different numbers of indirect references & Hard  & X \\
     \hline
-    Direct refs only & Questions with no indirect refs & Med & \\
+    Direct refs only & Questions with no indirect refs & Med & X\\
     \hline
     
     
@@ -64,7 +64,7 @@
     \hline
     \textbf{Name} & \textbf{Absent from training} & Done \\
     \hline
-    object-relationship & touching table (10,087), touching food (36,471), beneath table (1,583), beneath food (2,346) &X  \\
+    object-relationship & wiping table (207), wiping cup (139), beneath table (1371), beneath cup (100) &X  \\
     \hline
     repetition & taking a dish from somewhere (1: 344, 2: 8, 3: 5), putting some food somewhere (1: 452, 2: 17, 3: 3) & X \\
     \hline
@@ -72,7 +72,7 @@
     \hline
     before/after & before standing up (1341), before playing with phone (673), before throwing broom (25) & X \\
     \hline
-    longer & before standing up (1341), before playing with phone (673), before throwing broom (25) &  X\\
+    longer & longer than standing up (1341), longer than playing with phone (673), longer than throwing broom (25) &  X\\
     \hline
     
     %\end{tabular}
