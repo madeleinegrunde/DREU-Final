@@ -39,6 +39,13 @@ University of Pennsylvania\\
 % Additional authors and addresses can be added with ``\and'',
 % just like the second author.
 % To save space, use either the email address or home page, not both
+
+\and
+Ranjay Krishna\\
+Stanford University\\
+%Palo Alto, California\\
+{\tt\small ranjay.krishna@gmail.com}
+
 \and
 Maneesh Agrawala\\
 Stanford University\\
@@ -46,11 +53,6 @@ Stanford University\\
 {\tt\small maneesh@cs.stanford.edu}
 
 
-\and
-Ranjay Krishna\\
-Stanford University\\
-%Palo Alto, California\\
-{\tt\small ranjay.krishna@gmail.com}
 }
 \maketitle
 \pagestyle{empty}
@@ -76,7 +78,7 @@ The ability to perceive and reason about the world's actors, actions, objects, a
 
 %\mgm{I th ink this paragraph is much more focused than before, which is good. However, we are not going (goal -- state of world -- problem). Instead, we're saying (goal -- problem -- state of world) (with the exception of the idea that most are image-based). The current logical progression makes sense to me, but do you think there should be a more explicit "state of the world" sentence before going into the problems?}\rak{Good question. I was hoping that state of the world is image-based and the video descriptions are just problems. I think we can do a little better. I want to set the problem up so that the answer is the first sentence of the next paragraph. We want the answer to the problem to be a compositional spatio-temporal reasoning benchmark.}
 
-We introduce the video question answering benchmark Action Genome Question Answering (AGQA) and use it to evaluate models on compositional spatio-temporal reasoning. AGQA measures a wider variety of spatio-temporal reasoning skills than existing benchmarks. An ideal benchmark to measure spatio-temporal reasoning abilities should (1) be free of human annotation bias, (2) use videos of various lengths as input, (3) contain a large number of questions, and (4) provide not just a single accuracy score but a suite of new metrics that test various spatio-temporal capabilities. To achieve these goals, we developed an automatic approach that converts Action Genome’s spatio-temporal scene graphs, containing objects, relationships, actors, and actions, into compositional questions~\cite{ji2020action}.
+We introduce the video question answering benchmark Action Genome Question Answering (AGQA) and use it to evaluate models on compositional spatio-temporal reasoning. AGQA measures a wider variety of spatio-temporal reasoning skills than existing benchmarks. An ideal benchmark to measure spatio-temporal reasoning abilities should (1) be free of human annotation bias, (2) use videos of various lengths as input, (3) contain a large number of questions, and (4) provide not just a single accuracy score but a suite of metrics that test various spatio-temporal capabilities. To achieve these goals, we developed an automatic approach that converts Action Genome’s spatio-temporal scene graphs, containing objects, relationships, actors, and actions, into compositional questions~\cite{ji2020action}.
 
 %First, an ideal benchmark should test questions requiring a variety of spatio-temporal \rak{stick to spatio-temporal over temporal} reasoning skills, but c
 
@@ -90,7 +92,7 @@ The community does not know how existing models perform on more complex temporal
 %Creating this diverse range of questions has previously been difficult. Questions automatically generated from video captions often lack diversity in structure \cite{yu2019activitynet, jang2017tgif}. Human annotated datasets are too expensive to get a large enough sample to include a wide variety of categories, and benchmark creators have limited control over the contents of each question, limiting the ability to break down the test set into relevant categories \mgm{is what we say about human annotators true? I wanted to address the difficulties for each type, but I have not found anything relevant for human annotators}\rak{I think you just want to say something simpler - that it would take a lot of money to generate a dataset with the same size since each video-question pair will cost money.}. By recursively generating questions with direct references, indirect references, and temporal localizations, our question generation pipeline creates a diverse set of questions that can be trained and tested all together or separated by type. \rak{You have setup three wonderful points in the paragraph where I said goosebumps but your first point took up 3 paragraphs. You need to simply these into 1 paragraph and only get the main message across. You can divide deeper in the related work section. Intro should be high level and related work and make more specific distinctions.}
 
 %\mgm{seems like the above section is too long and makes this ideal benchmark list lose continuity. How can I condense the first point?}
-An ideal videoQA benchmark measures the ability to reason over visual stimuli instead of depending on the statistics of answer distributions~\cite{vatashsky2020vqa}. However, many question answering datasets have a bias towards common answers that reduce dependence on visual input and inflate accuracy scores~\cite{goyal2017making, hudson2019gqa}. 
+An ideal VideoQA benchmark measures the ability to reason over visual stimuli instead of depending on the statistics of answer distributions~\cite{vatashsky2020vqa}. However, many question answering datasets have a bias towards common answers that reduce dependence on visual input and inflate accuracy scores~\cite{goyal2017making, hudson2019gqa}. 
 %It is difficult for existing benchmarks to smooth answer distributions because they do not have direct access to structural and semantic content to separate them into granular categories. \mgm{I wanted to include the "Why is this hard" point. However, no vision-only video datasets tried even on the categories they did have. Should I just leave it as "this has not yet been done" or extrapolate why it may be difficult?} 
 Since we have question content information from our generation pipeline, we are able to smooth the answer distribution among different question types. 
 %\rak{You want to draw on how for tasks like object detection and image classification, people often try to balance their dataset and then talk about why it's difficult to do for your task.} TODO: FOR THE FINAL PAPER DO THIS!!!
