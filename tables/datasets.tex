@@ -1,0 +1,26 @@
+\begin{table*}[t]
+\caption{A comparison of our AGQA with existing video question answering datasets. AGQA is orders of magnitude larger than all existing question answering datasets. It is also the first
+large-scale real-world video question answering database providing both action, object, and relationship grounding.}
+\label{tab:dataset_compare}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{\extracolsep{4pt}}l lrc ccccl ccc@{}}
+ \multirow{2}{*}{Dataset} & \multicolumn{3}{c}{Video} & \multicolumn{4}{c}{Question answers} & \multicolumn{3}{c}{Grounding} \\ 
+ \cline{2-4}\cline{5-8}\cline{9-11}
+ & Avg. Length (s) & \# Videos (K) & Real-world & Not Dialogue Related & Open Answer & Compositional & \# QA Pairs & objects & relationships & actions \\ 
+ \hline
+MarioQA~\cite{mun2017marioqa} & 3-6 & 188 &  & \checkmark & \checkmark & & 188K \\
+CLEVRER~\cite{yi2019clevrer} & 5 & 20 &  & \checkmark & \checkmark & \checkmark & 282K & \checkmark & \checkmark & \checkmark\\ \hline
+Pororo-QA~\cite{kim2017deepstory} & 1.4 & 16.1 & \checkmark &  &  & & 9K \\
+MovieQA~\cite{tapaswi2016movieqa}  & 202.7 & 6.77 & \checkmark &  &  & & 6.4K \\
+SocialIQ~\cite{zadeh2019social} & 99 & 1.25 & \checkmark &  &  & & 7.5K \\
+TVQA~\cite{lei2018tvqa} & 76.2 & 21.8 & \checkmark &  &  & \checkmark & 152.5K \\
+MovieFIB\cite{maharaj2017dataset} & 4.9 & 118.5 & \checkmark & \checkmark & \checkmark & & 349K \\
+TGIF-QA~\cite{jang2017tgif} & 3.1 & 71.7 & \checkmark & \checkmark & \checkmark & & 165.2K \\
+MSVD-QA~\cite{xu2017video} & $<$10 & 1.97 & \checkmark & \checkmark & \checkmark & & 50.5K \\
+Video-QA~\cite{zeng2016leveraging} & 45 & 18.1 & \checkmark & \checkmark & \checkmark & & 175K \\
+MSRVTT-QA~\cite{xu2017video} & 10-30 & 10 & \checkmark & \checkmark & \checkmark & & 243K \\
+ActivityNet-QA~\cite{yu2019activitynet} & 180 & 5.8 & \checkmark & \checkmark & \checkmark & & 58K \\
+\hline
+\textbf{AGQA} & 30 & 9.6 & \checkmark & \checkmark & \checkmark & \checkmark &  \textbf{1.7M} & \checkmark & \checkmark & \checkmark\\
+\end{tabular}}
+\end{table*}
