@@ -185,23 +185,19 @@ Before balancing, our dataset has over 86.6M question-answer pairs in the traini
 
 %Notes to self: I think that the stuff CLEVR did with pruning down programs to find the essential necessities is cool. I probably don't have time for that now, but worth keeping in mind. 
 
-First, we judge the quality of our questions through a human subject study. We then tested our suite of metrics on several recent models to measure different types of spatio-temporal and compositional reasoning skills. We found (overall conclusions)
+First, we judge the quality of our questions through a human subject study, finding that humans achieve a 97\% accuracy on our benchmark. We then tested our suite of metrics on several recent models to measure different types of spatio-temporal reasoning skills. We found that models perform close to random on most measures. Finally, we measure compositional reasoning in several ways and find that existing models struggle on generalizing to new information, but are successful at generalizing from shorter videos to longer videos.
 
-\subsection{Human Analysis}
+\subsection{Human Study}
 
-\mgm{Include here the work other similar benchmarks did? How a lot of videoQA don't measure human accuracy, and what CLEVR/GQA got?}
+As mentioned before, annotation errors in the Charades and Action Genome datasets could lead to confusing or incorrect questions in our dataset. To measure the level of error after our augmentation strategies, we tested Amazon Mechanical Turk workers on their ability to answer the questions. We ran the study on 300 questions over 60 videos, with two Amazon Mechanical Turk workers per video. When the two workers disagreed, we got a third worker's opinion to break the tie. Since the Charades videos were filmed in AMT worker's homes there were often many objects and actions that were not within the Charades and Action Genome annotations. To clarify the objects of interest, we listed them for the workers. Workers were first given a free form text box, then given a drop down menu of possible answers to select the closest possible answer from the words within the model's vocabulary. We measure human accuracy from accuracy with the drop down menu. 
 
-As mentioned before, some annotation errors from the Charades and Action Genome datasets could lead to confusing or incorrect questions in our dataset. To measure the level of error, we tested Amazon Mechanical Turk workers on their ability to answer the questions. We ran the study on 300 questions over 60 videos, with two Amazon Mechanical Turk workers per video. When the two workers disagreed, we got a third worker's opinion to break the tie. Since the videos were filmed in AMT worker's homes there were often many objects and actions that were not within the Charades and Action Genome annotations, so we listed them for the workers. Workers were first given a free form text box, then given a drop down menu of possible answers to select the closest possible answer from the words within the model's vocabulary. We measure human accuracy from accuracy with the drop down menu. 
+After the first round, 28 questions had disagreement between the annotators so were rerun. With the tie breakers, human accuracy is 97\%, which implies that 3\% of our questions have errors in them. In comparison, GQA gets 89.3\% on human accuracy~\cite{hudson2019gqa}, and CLEVR gets between 79\% and 97\& depending on the question category~\cite{johnson2017clevr}. 
 
-After the first round, X questions had disagreement between the annotators so were rerun. The final 
-
-This accuracy is (similar/better) to human accuracy on GQA. It is less accurate than human accuracy on CLEVR/CLEVRER. 
-
-\mgm{Get numbers}
 
 \subsection{Describe the models we looked at briefly}
 
-To test different subsets of the dataset, 
+To test different subsets of the dataset, we look at three state of the art models. The Hierarchical Conditional Relation Network (HCRN) consists of... 
+
 
 \mgm{Is it necessary to do this? CLEVR did, GQA did not}
 %\begin{figure*}[t]
@@ -218,49 +214,60 @@ To test different subsets of the dataset,
 \input{tables/overall_results}
 }
 \end{center}
-   \caption{TODO}
-\label{global results}
+   \caption{Although humans can answer 97\% of the benchmark questions correctly, existing VideoQA models struggle to achieve a higher than random accuracy.}
+\label{table:global}
 \end{figure}
 
 
 
 \subsection{Spatio-temporal reasoning capabilities}
-The main purpose of the question-answering task is to measure different spatio-temporal reasoning capabilities, so we first analyze results on different types of reasoning. 
+The main purpose of the question-answering task is to measure different spatio-temporal reasoning capabilities, so we first analyze results on different types of reasoning. HCRN perform better than random at questions that ask what occurred and that count the number of actions, about random on questions asking if a concept occurred and questions asking to sequence actions, and worse than random on questions that involve the concepts of first, last, and length. 
+
+
 
 \textbf{}
 \subsection{Question Subject}
 
-Beyond categories on reasoning skills, we also separate the questions by the subject categories, object, object-relationship, relationships, and actions. Most questions involve more than one of these categories, but we classify questions into these categories by the core thing they ask about. On binary questions, it is worse about actions, but that is likely because many of those templates involve questions without Yes/No answers, which support the near 50\% accuracy in the other groups. For open answer questions, relations do by far the worst, followed by objects, then actions performing better. 
+Beyond categories on reasoning skills, we also separate the questions by the semantic categories, object, object-relationship, relationships, and actions. Most questions involve more than one of these categories, but we classify questions into these categories by the type of subject at the core of the question. 
 
-\mgm{TBH I don't know if I feel comfortable reading too much into this. Often depends on the template. Action open answer template is actCount, which has a better blind accuracy than the other ones}
+HCRN performs better than random on open answer questions about objects, but much worse than random on open answer questions about relationships, suggesting that relationships are a more difficult concept to grasp. Binary questions perform about random across all semantic categories, with the exception of actions which perform below random.
+
 
 \subsection{Question Structure}
 
 We have five types of question structures, that affect the facility of guessing answers. 
 
-\textbf{Query: } Query questions ask for open ended answers on what occurred or on how many times an action occurred. They have the lowest accuracy because they are all open answered. Of the query questions \mgm{Get results on actCount vs the rest}
+\textbf{Query: } Query questions ask for open ended answers on what occurred or on how many times an action occurred. They have the lowest accuracy because they are all open answered. Of the query questions. Query questions improve on the random baseline, suggesting some degree of learning, but the accuracy still remains low.
 
-\textbf{Compare: } Compare questions compare the attributes such as length, number of times they occurred, or the sequence of actions. 
+\textbf{Compare: } Compare questions compare action attributes such as length, number of times an action occurred, or the sequence of actions. HCRN performs poorly on this question structure, achieving an accuracy below random.
 
-\textbf{Choose: } Choose questions choose between two potential options. 
+\textbf{Choose: } Choose questions choose between two potential options. Although HCRN performs better than random on the choose category, it still performs poorly given that the question offers a choice between two options.
 
-\textbf{Logic: } Logic questions include a logical operator like and or xor. These questions have Yes/No answers. 
+\textbf{Logic: } Logic questions include a logical operator like and or xor. These questions have Yes/No answers. HCRN's accuracy stays at close to  50\% on logic questions.
 
-\textbf{Verify: } Verify questions verify whether or not the content of the question occured. These questions have Yes/No answers.
+\textbf{Verify: } Verify questions verify whether or not the content of the question occurred. These questions have Yes/No answers. HCRN's accuracy stays at close to 50\% on verify questions.
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/novel comp.pdf}
+    \caption{We create a training and test split to measure a model's ability to generalize to novel compositions. In the training set, certain ideas like "before" and "standing up" are seen in many other contexts, but never combined with one another. In the test set, we look specifically at questions where these ideas are combined to see if the accuracy remains consistent with the validation set, implying that the model successfully generalized.}
+    \label{fig:compo_fig}
+\end{figure}
 
 
 
 \subsection{Compositional metrics}
 
-We also create metrics designed to measure compositional reasoning and the ability to generalize. These metrics ask if models, when trained on simpler or incomplete information, can successfully complete a more complex task.
+We also create metrics designed to measure compositional reasoning. These metrics ask if models, when trained on simpler or incomplete information, can successfully complete a more complex task.
 
 
 \begin{figure*}[t]
 \begin{center}
 \input{tables/compositionality_results}
 \end{center}
-   \caption{TODO}
-\label{compo results}
+    \caption{We test the model on a variety of compositional reasoning skills. We check it's ability to generalize to novel compositions of ideas (Figure~\ref{fig:compo_fig}, from shorter videos to longer videos, and from simpler question structures to more complex questions structures.}
+    \label{table:compo}
 \end{figure*}
 
 
@@ -270,24 +277,16 @@ We also create metrics designed to measure compositional reasoning and the abili
 \input{tables/novel_comp_results}
 }
 \end{center}
-   \caption{TODO}
-\label{global results}
-\end{figure}
-
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.95\linewidth]{figures/novel comp.pdf}
-    \caption{We create a training and test split to measure a model's ability to generalize to novel compositions. In the training set, certain ideas like "before" and "standing up" are seen in many other contexts, but never combined with one another. In the test set, we look specifically at questions where these ideas are combined to see if the accuracy remains consistent with the validation set, implying that the model successfully generalized.}
-    \label{fig:compo}
+   \caption{We check the model's ability to generalize to novel compositions combining the above concepts with an action, object, or relationship.}
+\label{table:novel}
 \end{figure}
 
 
 \subsubsection{Novel Composition}
 
-An important part of human reasoning is the ability to generalize concepts of the same category to novel compositions. One way to test this ability in models is to train without a certain combination of phrases, then test to see if it can still correctly reason about that phrase \cite{lake2018generalization}. For example, in the training set the model may never see the phrase "before running", but see both "before" and "running" in other contexts. Then, in the test set, we can test if it understands the  idea  of  ”before running”.   We are able to create such a training and testing split to judge these  novel  compositions  because  we  have  knowledge  of what temporal localization, logical reasoning, and indirect tags are in each question.
+An important part of human reasoning is the ability to generalize concepts to novel compositions. One way to test this ability  is to train the model without a certain combination of phrases, then test it to see if it can still correctly reason about that phrase \cite{lake2018generalization}. For example, in the training set the model may never see the phrase "before standing up", but see both "before" and "standing up" in other contexts. Then, in the test set, we can test if it understands the  idea  of  ”before standing up”. We test combinations of ideas with questions asking the concenpts of before $<action>$, the first thing they $<$relation$>$, the $<$action$>$ they did for longer, the number of times an $<$action$>$ occurred, and several object-relation pairs. We are able to create such a training and testing split to judge these novel  compositions  because  we  have  knowledge  of what temporal localization, logical reasoning, and indirect tags are in each question.
 
-Results from models we tested.
+As shown in Figure~\ref{table:compo}, the model's performance drops considerably from the validation set to the test set when it sees novel combinations of ideas. It especially struggles on questions asking about the number of times something occurred, and with open answer questions involving the concept of "first". 
 
 \subsubsection{Indirect References}
 
@@ -301,14 +300,19 @@ This metric looks at questions that use only direct references to objects, relat
 
 \subsubsection{Number of Compositional Steps}
 
-In the previous metric, where we look at if the model can answer more complex questions given that it got an answer right. However, the model has seen both levels of complexity in training. In this metric, we look at if the model is able to generalize to more complex compositional structures after training on simple compositional structures \cite{lake2018generalization}. This metric measures compositional complexity through the number of "steps" each question has, which represents the number of reasoning operations needed to answer it. For each [template/global category], we split the training and testing set by the number of compositional steps they have, and find a the number of steps for each [template/global category] such that at least 50\% of the questions are at that number of steps or fewer. Then, in the training set, we train only on questions that are less than or equal to that marker. In the test set, we only test on questions that are greater than that marker. The marker is high enough that some indirect references are seen in the training set, however in the test set the model much make much more complex combinations and reasoning feats than before. It does worse on both binary and open questions, but especially on binary ones.
+In the previous metric, the model has seen both levels of complexity in training. In this metric, we look at if the model is able to generalize to more complex compositional structures after training on simple compositional structures \cite{lake2018generalization}. This metric measures compositional complexity through the number of "steps" each question has, which represents the number of reasoning operations needed to answer it. For each template, we find a the number of steps such that at least 50\% of the questions are at that number of steps or fewer. Then, in the training set, we train only on questions that are less than or equal to that marker. In the test set, we only test on questions that are greater than that marker. The marker is high enough that some indirect references are seen in the training set, however in the test set the model must make much more complex combinations and reasoning feats than before. For this metric, we balance the distribution of questions such that for every question in which a temporal localization phrase does not change the answer, there is at least one where it does.
+
+The model's accuracy drops from above random, to at random for binary questions, and decreases ts lead above random for open answer questions.
+
 
 \subsubsection{Length of video}
 
-Some video models are better at shorter or longer videos. Many existing video datasets are on short videos and many models are inflexible with video length \cite{le2020hierarchical}. This metric tests if models trained on short videos can generalize to being tested on long videos. HCRN was made specifically to be more flexible with video length, and it succeeds on our test. 
+Some video models are better at shorter or longer videos. Many existing video datasets are on short videos and many models are inflexible with video length \cite{le2020hierarchical}. This metric tests if models trained on short videos can generalize to being tested on long videos. HCRN was made specifically to be more flexible with video length, and its accuracy only drops slightly when tested on the longer videos.
 
 
-\section{Discussion and Limitations}
+\section{Conclusion and Limitations}
+
+Coherent Idea: 
 
 \mgm{A lot of separate ideas here, need to find a coherent flow}
 
