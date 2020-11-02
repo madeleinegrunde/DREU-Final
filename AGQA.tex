@@ -94,6 +94,22 @@ After making these corrections, our spatio-temporal scene graphs have 28 objects
 
 The second part of the pipeline consists of question templates that each have natural language sentences with tags representing different elements categories in the video, such as in the question "What were they $<$contact relationship$>$?". These tags can be objects, relationships, actions, or phrases that reference a certain part of the video. To increase variety in the dataset, there are multiple natural languages options for each template and the input objects, relationships, and actions are adjusted to be grammatically correct.
 
+\mgm{Moved form experiments section, since we want to talk about diversity in reasoning here}
+\textbf{What: } These questions ask what a person was doing. They measure the ability to locate a relationship and determine what object is being used. \mgm{this expl will change if we add in actions}
+
+\textbf{Length: } The length category compares the length of different actions. When generating the questions, we add in a buffer so an action must be annotated as at least 7 seconds longer than another for them to be compared. Length questions are only binary because they are comparisons (e.g. "What did they do for longer $<$action1$>$ or $<$action2$>$) or verification questions (e.g. "Did they do $<$action1$>$ for less time than $<$action2$>$.
+
+\textbf{First and Last: } These questions about the first or last occurrence in the video. 
+
+
+\textbf{Sequencing: } These questions ask if an action comes before or after another action.
+
+\textbf{Count: } Count questions ask how many times an action occurred, or ask to compare the number of times two actions occur.
+
+\textbf{Exists: } These questions ask if some event occurred
+
+
+
 Each template also contains information about the question's structure and the objects, relationships, and actions it references. Finally, each template contains a program that reasons over the spatio-temporal scene graph to automatically generate the answer.
 
 Before adding the question to the dataset, we check that there is no ambiguity in possible answers. We also avoid questions that have common sense combinations ("Are they wearing clothes?"), those that give away the answer ("What did they old while holding a blanket?), and those that are nonsensical ("Were they eating a mirror?").
@@ -103,7 +119,7 @@ To generate a question-answer pair, our system combines a spatio-temporal scene 
 \begin{figure}[t]
     \centering
     \includegraphics[width=\columnwidth]{figures/questions.pdf}
-    \caption{TODO}
+    \caption{A VideoQA benchmark should be diverse in the spatio-temporal reasoning skills it requires. Since our videos are based on skits, we do not have questions on explanation, prediction, or counterfactual reasoning as does the synthetic dataset CLEVRER~\cite{yi2019clevrer}. However, our questions cover a wider variety of reasoning abilities than other non-synthetic VideoQA benchmarks.}
     \label{fig:questions}
 \end{figure}
 
@@ -130,7 +146,7 @@ Of other real-world video question answering sets, TVQA has a similar temporal l
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/balance first.pdf}
-    \caption{TODO}
+    \caption{To avoid an artificially easy task, questions should have a diverse set of answers. The bottom row shows the answer distribution for questions that ask "What were they carrying first". In the unbalanced set, the answer "pillow" is correct for nearly 40\% of questions, while after balancing that value drops to 25\%. This balancing effect occurs across all question categories, as seen in the top row.}
     \label{fig:balancefirst}
 \end{figure}
 
@@ -211,23 +227,6 @@ To test different subsets of the dataset,
 \subsection{Spatio-temporal reasoning capabilities}
 The main purpose of the question-answering task is to measure different spatio-temporal reasoning capabilities, so we first analyze results on different types of reasoning. 
 
-\textbf{What: } \mgm{dear jesus come up with a less terrible name} These questions ask what a person was doing. They measure the ability to locate a relationship and determine what object is being used. \mgm{this expl will change if we add in actions}
-
-\textbf{Length: } The length category compares the length of different actions. When generating the questions, we add in a buffer so an action must be annotated as at least 7 seconds longer than another for them to be compared. Length questions are only binary because they are comparisons (e.g. "What did they do for longer $<$action1$>$ or $<$action2$>$) or verification questions (e.g. "Did they do $<$action1$>$ for less time than $<$action2$>$.
-
-\textbf{First and Last: } These questions about the first or last occurrence in the video. 
-
-
-\textbf{Sequencing: } These questions ask if an action comes before or after another action.
-
-\textbf{Count: } Count questions ask how many times an action occurred, or ask to compare the number of times two actions occur.
-
-\textbf{Exists: } These questions ask if some event 
-
-Looks like a LOT worse on test set, means gets confounded by the video? like a lot worse that is weird. So address that here.
-
-Concluding thoughts. the video doesn't really help, and it's close to random.
-
 \textbf{}
 \subsection{Question Subject}
 
@@ -279,14 +278,14 @@ We also create metrics designed to measure compositional reasoning and the abili
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/novel comp.pdf}
-    \caption{TODO}
+    \caption{We create a training and test split to measure a model's ability to generalize to novel compositions. In the training set, certain ideas like "before" and "standing up" are seen in many other contexts, but never combined with one another. In the test set, we look specifically at questions where these ideas are combined to see if the accuracy remains consistent with the validation set, implying that the model successfully generalized.}
     \label{fig:compo}
 \end{figure}
 
 
 \subsubsection{Novel Composition}
 
-An important part of human reasoning is the ability to generalize concepts of the same category to novel compositions \cite{}. One way to test this ability in models is to train without a certain combination of phrases, then test to see if it can still correctly reason about that phrase \cite{lake2018generalization}. For example, in the training set the model may never see the phrase "before running", but see both "before" and "running" in other contexts. Then, in the test set, we can test if it understands the  idea  of  ”before running”.   We are able to create such a training and testing split to judge these  novel  compositions  because  we  have  knowledge  of what temporal localization, logical reasoning, and indirect tags are in each question.
+An important part of human reasoning is the ability to generalize concepts of the same category to novel compositions. One way to test this ability in models is to train without a certain combination of phrases, then test to see if it can still correctly reason about that phrase \cite{lake2018generalization}. For example, in the training set the model may never see the phrase "before running", but see both "before" and "running" in other contexts. Then, in the test set, we can test if it understands the  idea  of  ”before running”.   We are able to create such a training and testing split to judge these  novel  compositions  because  we  have  knowledge  of what temporal localization, logical reasoning, and indirect tags are in each question.
 
 Results from models we tested.
 

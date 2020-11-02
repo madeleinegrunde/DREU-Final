@@ -50,6 +50,6 @@ Beyond measuring limited spatio-temporal reasoning, no existing benchmarks we kn
 \begin{figure*}[t]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/system.pdf}
-    \caption{TODO}
+    \caption{\textbf{Input:} To generate questions, we first ground the video in the \object{object}, \relationship{relation}, \action{action}, and \temporal{frame} level visual primitives by augmenting Action Genome's spatio-temporal scene graphs~\cite{ji2020action} and Charades' action annotations~\cite{sigurdsson2016hollywood}.  \mgm{add color}. \textbf{Our benchmark generation process:} we built a series templates with $<$tags$>$ that can be filled in with the associated primitive to generate a natural language question. Each template is also associated with a unique program that reasons over the spatio-temporal scene graph to automatically generate the answer to the question. \textbf{Output: } We create a dataset of question-answer pairs. Question diversity is increased by referencing primitives by their qualities (e.g. 'shortest action') or interactions (e.g. 'the object they carried').}
     \label{fig:system}
 \end{figure*}
